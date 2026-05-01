@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and preferences.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email"]
+    },
+    "StudySession": {
+      "title": "Study Session",
+      "description": "A study suite generated from an uploaded file.",
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "title": { "type": "string" },
+        "summary": { "type": "string", "description": "Markdown summary of the file." },
+        "keyConcepts": { "type": "array", "items": { "type": "string" } },
+        "flashcards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "q": { "type": "string" },
+              "a": { "type": "string" }
+            }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "summary", "flashcards", "createdAt"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message in a study session chat.",
+      "type": "object",
+      "properties": {
+        "sessionId": { "type": "string" },
+        "sender": { "type": "string", "enum": ["user", "ai"] },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles."
+    },
+    "sessions/{sessionId}": {
+      "schema": "StudySession",
+      "description": "Stores generated study sessions."
+    },
+    "sessions/{sessionId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Stores chat history for a session."
+    }
+  }
+}

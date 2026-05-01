@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  
+  --color-primary: #1A56DB;
+  --color-primary-hover: #1E429F;
+  --color-surface: #EFF6FF;
+  --color-bento-bg: #F9FBFF;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-slate-900 antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+.glass-card {
+  @apply bg-white border border-slate-100 shadow-sm rounded-3xl transition-all duration-300;
+}
+
+.bento-tile {
+  @apply bg-white border border-slate-100 shadow-sm rounded-3xl transition-all duration-300 p-6 overflow-hidden flex flex-col;
+}
+
+.btn-primary {
+  @apply px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-100 flex items-center justify-center gap-2;
+}
+
+.btn-secondary {
+  @apply px-6 py-2.5 bg-surface text-primary font-bold rounded-xl hover:bg-blue-100 transition-colors flex items-center justify-center gap-2;
+}
+
+.perspective-1000 { perspective: 1000px; }
+.preserve-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; }
+
+.markdown-body h1 { @apply text-2xl font-bold mb-4 font-display text-slate-800; }
+.markdown-body h2 { @apply text-xl font-semibold mb-3 mt-6 font-display text-slate-800; }
+.markdown-body p { @apply text-slate-600 mb-4 leading-relaxed text-sm; }
+.markdown-body ul { @apply list-disc list-inside mb-4 space-y-1.5 text-slate-600 text-sm; }
+.markdown-body blockquote { @apply border-l-4 border-primary pl-4 italic text-slate-500 my-4 bg-slate-50 py-2 pr-2 rounded-r-lg; }
+

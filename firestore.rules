@@ -1,0 +1,62 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['userId', 'email']) 
+        && data.userId is string 
+        && data.email is string 
+        && data.userId == request.auth.uid;
+    }
+
+    function isValidSession(data) {
+      return data.keys().hasAll(['userId', 'summary', 'flashcards', 'createdAt'])
+        && data.userId == request.auth.uid
+        && data.summary is string
+        && data.flashcards is list
+        && data.createdAt == request.time;
+    }
+
+    function isValidMessage(data) {
+      return data.keys().hasAll(['sender', 'text', 'createdAt'])
+        && data.sender in ['user', 'ai']
+        && data.text is string
+        && data.createdAt == request.time;
+    }
+
+    // Collection matches
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidUser(request.resource.data);
+    }
+
+    match /sessions/{sessionId} {
+      allow get: if isOwner(resource.data.userId);
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && isValidSession(request.resource.data);
+      allow delete: if isOwner(resource.data.userId);
+    }
+
+    match /sessions/{sessionId}/messages/{messageId} {
+      allow list: if isSignedIn() && get(/databases/$(database)/documents/sessions/$(sessionId)).data.userId == request.auth.uid;
+      allow create: if isSignedIn() && get(/databases/$(database)/documents/sessions/$(sessionId)).data.userId == request.auth.uid && isValidMessage(request.resource.data);
+    }
+  }
+}

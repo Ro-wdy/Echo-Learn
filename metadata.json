@@ -1,0 +1,6 @@
+{
+  "name": "EchoLearn",
+  "description": "An AI-powered study suite that transforms files into summaries, flashcards, and interactive chat sessions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
