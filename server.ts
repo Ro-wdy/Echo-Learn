@@ -24,11 +24,41 @@ async function startServer() {
   });
 
   // EchoLearn specific endpoint - acts as a light processor or just a placeholder
-  // since the skill mandates Gemini calls from the frontend.
   app.post("/api/process", (req, res) => {
-    // This could handle file upload and return text if needed,
-    // but we'll prioritize the client-side Gemini call for context.
     res.json({ message: "File received. Processing in client-side Gemini." });
+  });
+
+  app.get("/api/youtube-transcript", async (req, res) => {
+    const videoUrl = req.query.url as string;
+    if (!videoUrl) {
+      return res.status(400).json({ error: "YouTube URL is required" });
+    }
+
+    try {
+      // Basic extraction of video ID from URL
+      let videoId = "";
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = videoUrl.match(regExp);
+      if (match && match[2].length === 11) {
+        videoId = match[2];
+      } else {
+        throw new Error("Invalid YouTube URL");
+      }
+
+      // Instead of an external library that might fail in this env,
+      // we'll use a fetch-based approach or just inform the user we're fetching.
+      // Actually, many youtube scraping libs require browser or specific keys.
+      // For a hackathon, we can use a mock or a simple fetch if possible.
+      // Let's try to use the library I just installed.
+      const { YoutubeTranscript } = await import('youtube-transcript');
+      const transcript = await YoutubeTranscript.fetchTranscript(videoId);
+      const fullText = transcript.map(t => t.text).join(" ");
+      
+      res.json({ transcript: fullText, videoId });
+    } catch (err) {
+      console.error("YouTube Error:", err);
+      res.status(500).json({ error: "Failed to fetch YouTube transcript. Make sure the video has captions enabled." });
+    }
   });
 
   // Vite middleware for development
