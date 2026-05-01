@@ -108,9 +108,9 @@ export default function App() {
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 1.02 }}
-                className="h-full"
+                className="h-full relative z-0"
               >
-                <Dashboard session={activeSession} />
+                <Dashboard session={activeSession} onBack={() => setActiveSession(null)} />
               </motion.div>
             )}
           </AnimatePresence>

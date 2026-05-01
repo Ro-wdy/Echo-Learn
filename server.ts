@@ -46,10 +46,7 @@ async function startServer() {
       }
 
       // Instead of an external library that might fail in this env,
-      // we'll use a fetch-based approach or just inform the user we're fetching.
-      // Actually, many youtube scraping libs require browser or specific keys.
-      // For a hackathon, we can use a mock or a simple fetch if possible.
-      // Let's try to use the library I just installed.
+      // we'll use the youtube-transcript package which is more reliable for Node.
       const { YoutubeTranscript } = await import('youtube-transcript');
       const transcript = await YoutubeTranscript.fetchTranscript(videoId);
       const fullText = transcript.map(t => t.text).join(" ");

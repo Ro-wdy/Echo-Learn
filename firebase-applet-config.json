@@ -1,10 +1,10 @@
 {
-  "projectId": "angularroadshow",
-  "appId": "1:126035063372:web:8a65ee6541a1ff32f0fae9",
-  "apiKey": "AIzaSyDPLRYnMsjQ_yEFHVp9WlExDIUqubkbpq8",
-  "authDomain": "angularroadshow.firebaseapp.com",
+  "projectId": "gen-lang-client-0305286299",
+  "appId": "1:230087433666:web:e03c4b9a0917e89dd28a5b",
+  "apiKey": "AIzaSyBBUDLTgixfVKlEFLPxWXSoxZ8KfzZdDRU",
+  "authDomain": "gen-lang-client-0305286299.firebaseapp.com",
   "firestoreDatabaseId": "ai-studio-5fe1abc3-807f-4e93-9cc9-d51172d0b48a",
-  "storageBucket": "angularroadshow.firebasestorage.app",
-  "messagingSenderId": "126035063372",
+  "storageBucket": "gen-lang-client-0305286299.firebasestorage.app",
+  "messagingSenderId": "230087433666",
   "measurementId": ""
 }
