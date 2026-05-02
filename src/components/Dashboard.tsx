@@ -27,17 +27,17 @@ export default function Dashboard({ session, onBack }: { session: any, onBack: (
           </div>
         </div>
         
-        <div className="flex bg-slate-100 p-1 rounded-xl">
+          <div className="flex bg-slate-100 p-1 rounded-xl relative z-30">
           <button 
-            onClick={() => setView('suite')}
-            className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${view === 'suite' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+            onClick={(e) => { e.stopPropagation(); setView('suite'); }}
+            className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer pointer-events-auto ${view === 'suite' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
           >
             <Layout className="w-4 h-4" />
             Study Suite
           </button>
           <button 
-            onClick={() => setView('flashcards')}
-            className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${view === 'flashcards' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+            onClick={(e) => { e.stopPropagation(); setView('flashcards'); }}
+            className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer pointer-events-auto ${view === 'flashcards' ? 'bg-white text-primary shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
           >
             <Brain className="w-4 h-4" />
             Active Recall
@@ -89,16 +89,16 @@ export default function Dashboard({ session, onBack }: { session: any, onBack: (
                         " {showAnswer ? session.flashcards?.[0]?.a : session.flashcards?.[0]?.q || "Ready to test your knowledge?"} "
                       </p>
                     </div>
-                    <div className="flex justify-between items-center mt-auto relative z-20">
+                    <div className="flex justify-between items-center mt-auto relative z-30">
                       <button 
-                        onClick={() => setShowAnswer(!showAnswer)}
-                        className="text-[10px] font-bold uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity cursor-pointer p-2 -m-2"
+                        onClick={(e) => { e.stopPropagation(); setShowAnswer(!showAnswer); }}
+                        className="text-[10px] font-bold uppercase tracking-widest opacity-80 hover:opacity-100 transition-opacity cursor-pointer pointer-events-auto p-2 -m-2"
                       >
                         {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
                       </button>
                       <button 
-                        onClick={() => setView('flashcards')}
-                        className="text-xs font-bold bg-white text-primary px-4 py-2 rounded-xl shadow-sm hover:scale-105 transition-all cursor-pointer"
+                        onClick={(e) => { e.stopPropagation(); setView('flashcards'); }}
+                        className="text-xs font-bold bg-white text-primary px-4 py-2 rounded-xl shadow-sm hover:scale-105 transition-all cursor-pointer pointer-events-auto"
                       >
                         Open Full Deck
                       </button>
